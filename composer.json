@@ -26,7 +26,7 @@
                 "Davidcb\\Esendex\\EsendexServiceProvider"
             ],
             "aliases": {
-                "CampaignMonitor": "Davidcb\\Esendex\\Facades\\Esendex"
+                "Esendex": "Davidcb\\Esendex\\Facades\\Esendex"
             }
         }
     }
