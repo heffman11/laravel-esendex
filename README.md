@@ -7,7 +7,7 @@ Laravel 5 wrapper for Esendex SMS
 
 ## Installation
 
-Install via Composer;
+Install via Composer:
 ```
 composer require davidcb/laravel-esendex
 ```
