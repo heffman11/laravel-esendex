@@ -1,0 +1,33 @@
+{
+    "name": "davidcb/laravel-esendex",
+    "description": "Laravel 5 wrapper for Esendex",
+    "keywords": ["laravel", "laravel5", "esendex", "integration", "sms"],
+	"license": "MIT License",
+    "authors": [
+        {
+            "name": "David Couto",
+            "email": "davidcouto@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "~5.0",
+        "esendex/sdk": "2.*.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Davidcb\\Esendex": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Davidcb\\Esendex\\EsendexServiceProvider"
+            ],
+            "aliases": {
+                "CampaignMonitor": "Davidcb\\Esendex\\Facades\\Esendex"
+            }
+        }
+    }
+}
