@@ -2,6 +2,8 @@
 
 namespace Davidcb\Esendex;
 
+use \Esendex as EsendexSdk;
+
 class Esendex
 {
     protected $app;
@@ -31,7 +33,7 @@ class Esendex
      * @param  string $from              Sender's name (max 10 characters)
      * @param  string $recipient         Recipient's telephone number
      * @param  string $text              SMS's body
-     * @return \Esendex\Model\ResultItem response
+     * @return \EsendexSdk\Model\ResultItem response
      */
     public function send($from, $recipient, $text)
     {
@@ -39,9 +41,9 @@ class Esendex
             $from,
             $recipient,
             $text,
-            \Esendex\Model\Message::SmsType
+            \EsendexSdk\Model\Message::SmsType
         );
-        $service = new \Esendex\DispatchService($this->authentication);
+        $service = new \EsendexSdk\DispatchService($this->authentication);
         return $service->send($message);
     }
 
@@ -51,7 +53,7 @@ class Esendex
      */
     public function getCredits()
     {
-        $service = new \Esendex\DispatchService($this->authentication);
+        $service = new \EsendexSdk\DispatchService($this->authentication);
         return $service->getCredits();
     }
 
@@ -59,11 +61,11 @@ class Esendex
      * Returns latest inbox messages
      * @param int|null $startIndex
      * @param int|null $count
-     * @return \Esendex\Model\InboxPage|null
+     * @return \EsendexSdk\Model\InboxPage|null
      */
     public function latest($startIndex = null, $count = null)
     {
-        $service = new \Esendex\InboxService($this->authentication);
+        $service = new \EsendexSdk\InboxService($this->authentication);
         return $service->latest($startIndex, $count);
     }
 
@@ -74,7 +76,7 @@ class Esendex
      */
     public function deleteInboxMessage($messageId)
     {
-        $service = new \Esendex\InboxService($this->authentication);
+        $service = new \EsendexSdk\InboxService($this->authentication);
         return $service->deleteInboxMessage($messageId);
     }
 
@@ -86,7 +88,7 @@ class Esendex
      */
     public function updateReadStatus($messageId, $read = true)
     {
-        $service = new \Esendex\InboxService($this->authentication);
+        $service = new \EsendexSdk\InboxService($this->authentication);
         return $service->updateReadStatus($messageId, $read);
     }
 
@@ -97,7 +99,7 @@ class Esendex
      */
     public function messageStatus($messageId)
     {
-        $headerService = new \Esendex\MessageHeaderService($authentication);
+        $headerService = new \EsendexSdk\MessageHeaderService($authentication);
         $message = $headerService->message($messageId);
         return $message ? $message->status() : null;
     }
@@ -109,7 +111,7 @@ class Esendex
      */
     public function getMessageBodyById($messageId)
     {
-        $service = new \Esendex\MessageBodyService($authentication);
+        $service = new \EsendexSdk\MessageBodyService($authentication);
         return $service->getMessageBodyById($messageId);
     }
 
@@ -117,11 +119,11 @@ class Esendex
      * Returns latest sent messages
      * @param int|null $startIndex
      * @param int|null $count
-     * @return \Esendex\Model\SentMessagesPage|null
+     * @return \EsendexSdk\Model\SentMessagesPage|null
      */
     public function latestSent($startIndex = null, $count = null)
     {
-        $service = new \Esendex\SentMessagesService($this->authentication);
+        $service = new \EsendexSdk\SentMessagesService($this->authentication);
         return $service->latest($startIndex, $count);
     }
 
@@ -129,11 +131,11 @@ class Esendex
      * Adds a telephone number to the opt-out list
      * @param string $accountReference
      * @param string $mobileNumber
-     * @return \Esendex\Model\OptOut
+     * @return \EsendexSdk\Model\OptOut
      */
     public function addToOptOut($accountReference, $mobileNumber)
     {
-        $service = new \Esendex\OptOutsService($this->authentication);
+        $service = new \EsendexSdk\OptOutsService($this->authentication);
         return $service->add($accountReference, $mobileNumber);
     }
 
@@ -145,7 +147,7 @@ class Esendex
      */
     public function getOptOutList($pageNumber = null, $pageSize = null)
     {
-        $service = new \Esendex\OptOutsService($this->authentication);
+        $service = new \EsendexSdk\OptOutsService($this->authentication);
         return $service->get($pageNumber, $pageSize);
     }
 
@@ -153,17 +155,17 @@ class Esendex
      * Returns the account with the given reference or the authenticated
      * account reference if it exists
      * @param  string $reference The account reference
-     * @return \Esendex\Model\Account|null
+     * @return \EsendexSdk\Model\Account|null
      */
     public function getAccount($reference = null)
     {
-        $service = new \Esendex\AccountService($this->authentication);
+        $service = new \EsendexSdk\AccountService($this->authentication);
         return $service->getAccount($reference);
     }
 
     /**
      * Returns the accounts within the authenticated account
-     * @return \Esendex\Model\Account
+     * @return \EsendexSdk\Model\Account
      */
     public function getAccounts()
     {
@@ -176,11 +178,11 @@ class Esendex
      * @param  string $reference Account reference
      * @param  string $email     Authentication email address
      * @param  string $password  Authentication password
-     * @return \Esendex\Authentication\LoginAuthentication
+     * @return \EsendexSdk\Authentication\LoginAuthentication
      */
     protected function getAuthentication($reference = null, $email = null, $password = null)
     {
-        return new \Esendex\Authentication\LoginAuthentication(
+        return new \EsendexSdk\Authentication\LoginAuthentication(
             $reference ?? $this->app['config']['esendex.account_id'],
             $email ?? $this->app['config']['esendex.email'],
             $password ?? $this->app['config']['esendex.password']
