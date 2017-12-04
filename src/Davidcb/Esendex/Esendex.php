@@ -28,10 +28,10 @@ class Esendex
 
     /**
      * Sends a message using the Esendex API
-     * @param  string $from             Sender's name (max 10 characters)
-     * @param  string $recipient        Recipient's telephone number
-     * @param  string $text             SMS's body
-     * @return Esendex\Model\ResultItem response
+     * @param  string $from              Sender's name (max 10 characters)
+     * @param  string $recipient         Recipient's telephone number
+     * @param  string $text              SMS's body
+     * @return \Esendex\Model\ResultItem response
      */
     public function send($from, $recipient, $text)
     {
