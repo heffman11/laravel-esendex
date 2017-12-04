@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Davidcb\\Esendex": "src/"
+            "Davidcb\\LaravelEsendex": "src/"
         }
     },
     "minimum-stability": "dev",
