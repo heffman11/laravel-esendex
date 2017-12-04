@@ -23,10 +23,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Davidcb\\Esendex\\EsendexServiceProvider"
+                "Davidcb\\LaravelEsendex\\LaravelEsendexServiceProvider"
             ],
             "aliases": {
-                "Esendex": "Davidcb\\Esendex\\Facades\\Esendex"
+                "Esendex": "Davidcb\\LaravelEsendex\\Facades\\LaravelEsendex"
             }
         }
     }

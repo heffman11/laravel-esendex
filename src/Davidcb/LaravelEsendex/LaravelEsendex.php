@@ -1,10 +1,8 @@
 <?php
 
-namespace Davidcb\Esendex;
+namespace Davidcb\LaravelEsendex;
 
-use \Esendex as EsendexSdk;
-
-class Esendex
+class LaravelEsendex
 {
     protected $app;
     protected $authentication;

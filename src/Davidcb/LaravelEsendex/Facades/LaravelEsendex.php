@@ -1,10 +1,10 @@
 <?php
 
-namespace Davidcb\Esendex\Facades;
+namespace Davidcb\LaravelEsendex\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Esendex extends Facade
+class LaravelEsendex extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -13,6 +13,6 @@ class Esendex extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'esendex';
+        return 'laravel-esendex';
     }
 }

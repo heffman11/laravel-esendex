@@ -1,10 +1,10 @@
 <?php
 
-namespace Davidcb\Esendex;
+namespace Davidcb\LaravelEsendex;
 
 use Illuminate\Support\ServiceProvider;
 
-class EsendexServiceProvider extends ServiceProvider
+class LaravelEsendexServiceProvider extends ServiceProvider
 {
     protected $defer = true;
 
@@ -19,13 +19,13 @@ class EsendexServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__.'/../../config/esendex.php', 'esendex');
 
-        $this->app->singleton('esendex', function ($app) {
-            return new Esendex($app);
+        $this->app->singleton('laravel-esendex', function ($app) {
+            return new LaravelEsendex($app);
         });
     }
 
     public function provides()
     {
-        return ['esendex'];
+        return ['laravel-esendex'];
     }
 }
