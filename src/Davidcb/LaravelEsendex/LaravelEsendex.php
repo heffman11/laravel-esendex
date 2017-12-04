@@ -172,6 +172,18 @@ class LaravelEsendex
     }
 
     /**
+     * Creates a new account and returns it
+     * @param string $customerId
+     * @param string $label
+     * @return \Esendex\Model\Account
+     */
+    public function createAccount($customerId, $label)
+    {
+        $service = new LaravelAccountService($this->authentication);
+        return $service->create($customerId, $label);
+    }
+
+    /**
      * Gets the Esendex Authentication object for given credentials
      * @param  string $reference Account reference
      * @param  string $email     Authentication email address
