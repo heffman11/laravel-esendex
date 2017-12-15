@@ -3,6 +3,7 @@
 namespace Davidcb\LaravelEsendex;
 
 use \Esendex\Model\Api;
+use \Esendex\Model\Account;
 
 class LaravelAccountService extends \Esendex\AccountService {
 
@@ -27,7 +28,7 @@ class LaravelAccountService extends \Esendex\AccountService {
             : new \Esendex\Parser\AccountXmlParser();
     }
 
-    public function create($customerId, $label)
+    public function create($label)
     {
         $uri = \Esendex\Http\UriBuilder::serviceUri(
             self::SERVICE_VERSION,
@@ -36,7 +37,7 @@ class LaravelAccountService extends \Esendex\AccountService {
             $this->httpClient->isSecure()
         );
 
-        $xmlRequest = $this->encodePostRequest($customerId, $label);
+        $xmlRequest = $this->encodePostRequest($label);
 
         $xmlResult = $this->httpClient->post(
                          $uri,
@@ -44,26 +45,44 @@ class LaravelAccountService extends \Esendex\AccountService {
                          $xmlRequest
                      );
 
-                     dd($xmlResult);
-
-        return $this->parser->parsePostResponse($xmlResult);
+        return $this->parseAccount($xmlResult);
     }
 
-    public function encodePostRequest($customerId, $label)
+    private function encodePostRequest($label)
     {
-        if (strlen($customerId) < 1) {
-            throw new ArgumentException("Customer ID is invalid");
-        }
         if (strlen($label) < 1) {
             throw new ArgumentException("Label is invalid");
         }
 
         $doc = new \SimpleXMLElement("<?xml version=\"1.0\" encoding=\"utf-8\"?><account />", 0, false, Api::NS);
         $doc->addAttribute("xmlns", Api::NS);
-        $child = $doc->addChild("customerid", $customerId);
         $child = $doc->addChild("label", $label);
 
         return $doc->asXML();
+    }
+
+    private function parseAccount($account)
+    {
+        $account = simplexml_load_string($account);
+        $result = new Account();
+        $result->id($account["id"]);
+        $result->reference($account->reference);
+        $result->label($account->label);
+        $result->address($account->address);
+        $result->alias($account->alias);
+        $result->type($account->type);
+        $result->messagesRemaining(intval($account->messagesremaining, 10));
+        $result->expiresOn($this->parseDateTime($account->expireson));
+        $result->defaultDialCode($account->defaultdialcode);
+        return $result;
+    }
+
+    private function parseDateTime($value)
+    {
+        $value = (strlen($value) < 20)
+            ? $value . "Z"
+            : substr($value, 0, 19) . "Z";
+        return \DateTime::createFromFormat(\DateTime::ISO8601, $value);
     }
 
 }

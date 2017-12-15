@@ -173,14 +173,13 @@ class LaravelEsendex
 
     /**
      * Creates a new account and returns it
-     * @param string $customerId
      * @param string $label
      * @return \Esendex\Model\Account
      */
-    public function createAccount($customerId, $label)
+    public function createAccount($label)
     {
         $service = new LaravelAccountService($this->authentication);
-        return $service->create($customerId, $label);
+        return $service->create($label);
     }
 
     /**
