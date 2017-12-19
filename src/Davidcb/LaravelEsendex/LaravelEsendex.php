@@ -56,6 +56,19 @@ class LaravelEsendex
     }
 
     /**
+     * Moves the given number of credits from one account to another
+     * @param string $fromReference
+     * @param string $toReference
+     * @param int $quantity
+     * @return string
+     */
+    public function moveCredits($fromReference, $toReference, $quantity)
+    {
+        $service = new LaravelCreditsService($this->authentication);
+        return $service->move($fromReference, $toReference, $quantity);
+    }
+
+    /**
      * Returns latest inbox messages
      * @param int|null $startIndex
      * @param int|null $count
