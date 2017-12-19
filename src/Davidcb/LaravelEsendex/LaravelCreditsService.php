@@ -9,7 +9,6 @@ class LaravelCreditsService extends \Esendex\AccountService {
 
     private $authentication;
     private $httpClient;
-    private $parser;
 
     const SERVICE = "credits";
     const SERVICE_VERSION = "v1.0";
@@ -32,15 +31,21 @@ class LaravelCreditsService extends \Esendex\AccountService {
             $this->httpClient->isSecure()
         );
 
+        $uri = str_replace('api', 'admin.api', $uri);
+
         $jsonRequest = $this->encodePostRequest($fromReference, $toReference, $quantity);
 
-        $result = $this->httpClient->post(
+        $result = $this->httpClient->postJson(
                          $uri,
                          $this->authentication,
                          $jsonRequest
                      );
 
-        return $result;
+        if ($result instanceof BadRequestException) {
+            return false;
+        }
+
+        return true;
     }
 
     private function encodePostRequest($fromReference, $toReference, $quantity)
@@ -55,17 +60,9 @@ class LaravelCreditsService extends \Esendex\AccountService {
             throw new ArgumentException("Quantity is invalid");
         }
 
-        $args = ['from' => $fromReference, 'to' => $toReference, 'quantity' => $quantity, 'orderby' => 'expiry_asc'];
+        $args = ['from' => $fromReference, 'to' => $toReference, 'quantity' => $quantity];
 
         return json_encode($args);
-    }
-
-    private function parseDateTime($value)
-    {
-        $value = (strlen($value) < 20)
-            ? $value . "Z"
-            : substr($value, 0, 19) . "Z";
-        return \DateTime::createFromFormat(\DateTime::ISO8601, $value);
     }
 
 }
