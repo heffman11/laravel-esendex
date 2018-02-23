@@ -2,7 +2,7 @@
     "name": "davidcb/laravel-esendex",
     "description": "Laravel 5 wrapper for Esendex",
     "keywords": ["laravel", "laravel5", "esendex", "integration", "sms"],
-	"license": "MIT License",
+	"license": "MIT",
     "authors": [
         {
             "name": "David Couto",
