@@ -42,17 +42,17 @@ You can find all the methods in the original [esendex/esendex-php-sdk package](h
 Examples:
 ```php
 // Send an SMS
-$result = Esendex::sendMessage('Sender', '555000000', 'This is the text of the SMS');
+$result = LaravelEsendex::send('Sender', '555000000', 'This is the text of the SMS');
 ```
 ```php
 // Retrieve inbox messages
-$messages = Esendex::inboxMessages();
+$messages = LaravelEsendex::latest();
 ```
 ```php
 // Get a message's status
-$status = Esendex::messageStatus('123456');
+$status = LaravelEsendex::messageStatus('123456');
 ```
 ```php
 // Get a message's body
-$body = Esendex::messageBody('123456');
+$body = LaravelEsendex::getMessageBodyById('123456');
 ```
